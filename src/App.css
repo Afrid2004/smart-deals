@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+*{
+  font-family: "Roboto", sans-serif;
+}
+
+ .text-primary{
+  @apply text-[#25343F]
+}
+
+.text-secondary{
+  @apply text-[#91989e]
+}
+.container{
+  @apply px-4 lg:px-0 w-full max-w-110 sm:max-w-150 md:max-w-187.5 lg:max-w-250 xl:max-w-300 2xl:max-w-325 mx-auto;
+}
+.gradient{
+  background-image: linear-gradient(300deg, #022f2e, #009689 51%, #022f2e);
+  background-size: 200%;
+  background-position: right;
+  transition: all .2s ease-in-out;
+} 
+
+.gradient:hover{
+    background-position: left;
+}
+.gradient-text {
+  background-image: linear-gradient(300deg, #022f2e, #009689 );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.active{
+  @apply text-teal-700;
+}
+
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
