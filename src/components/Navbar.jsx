@@ -1,7 +1,14 @@
-import React from "react";
+import React, { use } from "react";
 import { Link, NavLink } from "react-router";
+import { AuthContext } from "../context/AuthContext";
+import Avatar from "./Avatar";
 
 const Navbar = () => {
+  const { user, logout } = use(AuthContext);
+
+  const handleLogout = () => {
+    logout();
+  };
   const menus = (
     <>
       <NavLink to="/" className="hover:text-teal-600">
@@ -13,6 +20,16 @@ const Navbar = () => {
       <NavLink to="/blogs" className="hover:text-teal-600">
         Blogs
       </NavLink>
+      {user?.emailVerified && (
+        <>
+          <NavLink to="/my-products" className="hover:text-teal-600">
+            My Products
+          </NavLink>
+          <NavLink to="/my-bids" className="hover:text-teal-600">
+            My Bids
+          </NavLink>
+        </>
+      )}
     </>
   );
   return (
@@ -42,15 +59,32 @@ const Navbar = () => {
           {/* right auth button */}
           <div className="hidden lg:flex">
             <div className="flex items-center gap-3">
-              <Link
-                to="/login"
-                className="px-4 py-2 border hover:bg-teal-950 hover:text-white duration-300"
-              >
-                Login
-              </Link>
-              <Link className="px-6 py-2 text-white  gradient" to="/register">
-                Register
-              </Link>
+              {user?.emailVerified ? (
+                <>
+                  {user && <Avatar />}
+                  <button
+                    onClick={handleLogout}
+                    className="px-4 cursor-pointer py-2 border hover:bg-teal-950 hover:text-white duration-300"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    className="px-4 py-2 border hover:bg-teal-950 hover:text-white duration-300"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    className="px-6 py-2 text-white  gradient"
+                    to="/register"
+                  >
+                    Register
+                  </Link>
+                </>
+              )}
             </div>
           </div>
           {/* right auth button */}

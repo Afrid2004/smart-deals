@@ -1,21 +1,28 @@
 import { Eye, EyeOff, Lock, Mail, UserRound } from "lucide-react";
 import React, { use, useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
 
 const Register = () => {
-  const { user, setUser, creteUser, emailVerify, updateUser, logout } =
-    use(AuthContext);
+  const {
+    user,
+    setUser,
+    creteUser,
+    emailVerify,
+    updateUser,
+    logout,
+    signInWithGoogle,
+  } = use(AuthContext);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
+  const navigate = useNavigate();
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{6,}$/;
   const spin = (
     <div className="w-4 h-4 border-2 border-white border-t-white/30 border-r-white/30 rounded-full animate-spin"></div>
   );
-
   const handleShow = () => {
     setShow(!show);
   };
@@ -60,9 +67,25 @@ const Register = () => {
       .then((result) => {
         updateUser({
           displayName: name,
-        }).then((result) => {
+        }).then(() => {
           setUser({ ...result.user, displayName: name });
           emailVerify();
+          const userData = {
+            name: name,
+            email: email,
+          };
+          fetch("http://localhost:3000/users", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(userData),
+          })
+            .then((res) => res.json())
+            .then((data) => data)
+            .catch((err) => {
+              setError(err.message);
+            });
           return logout();
         });
       })
@@ -83,6 +106,33 @@ const Register = () => {
       })
       .finally(() => {
         setLoading(false);
+      });
+  };
+
+  const handleGoogle = () => {
+    setError("");
+    signInWithGoogle()
+      .then((result) => {
+        const userData = {
+          name: result.user.displayName,
+          email: result.user.email,
+        };
+        fetch("http://localhost:3000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        })
+          .then((res) => res.json())
+          .then((data) => navigate(from, { replace: true }))
+          .catch((err) => {
+            setError(err.message);
+          });
+        navigate("/");
+      })
+      .catch((err) => {
+        setError("Something went wrong. Please try again later.");
       });
   };
 
@@ -176,27 +226,34 @@ const Register = () => {
                   </div>
                 </div>
 
-                <button className="py-2 px-4 cursor-pointer bg-teal-900 hover:bg-teal-950 duration-75 text-white w-full rounded-md mb-3 flex items-center justify-center gap-2">
+                <button
+                  type="submit"
+                  className="py-2 px-4 cursor-pointer bg-teal-900 hover:bg-teal-950 duration-75 text-white w-full rounded-md flex items-center justify-center gap-2 mb-3"
+                >
                   Register {loading && spin}
                 </button>
-
-                <div className="flex items-center justify-between gap-3 mb-3">
-                  <div className="border-t border-gray-300 grow"></div>
-                  <span>OR</span>
-                  <div className="border-t border-gray-300 grow"></div>
-                </div>
-
-                <button className="py-2 px-4 cursor-pointer border border-gray-200/70 w-full rounded-md bg-gray-200/80 hover:bg-gray-300/70 duration-75 flex  items-center justify-center gap-2">
-                  <div className="w-5">
-                    <img
-                      src="/images/google.png"
-                      alt="google"
-                      className="w-full shrink-0"
-                    />
-                  </div>
-                  Continue with Google
-                </button>
               </form>
+            </div>
+            <div>
+              <div className="flex items-center justify-between gap-3 mb-3">
+                <div className="border-t border-gray-300 grow"></div>
+                <span>OR</span>
+                <div className="border-t border-gray-300 grow"></div>
+              </div>
+
+              <button
+                onClick={handleGoogle}
+                className="py-2 px-4 cursor-pointer border border-gray-200/70 w-full rounded-md bg-gray-200/80 hover:bg-gray-300/70 duration-75 flex  items-center justify-center gap-2"
+              >
+                <div className="w-5">
+                  <img
+                    src="/images/google.png"
+                    alt="google"
+                    className="w-full shrink-0"
+                  />
+                </div>
+                Continue with Google
+              </button>
             </div>
           </div>
         </div>
