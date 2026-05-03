@@ -33,7 +33,7 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="bg-white border-b border-gray-200 py-2">
+    <div className="bg-white border-b border-gray-200 py-2 sticky top-0">
       <div className="container">
         <div className="flex items-center justify-between">
           {/* left logo */}
