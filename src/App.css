@@ -3,6 +3,9 @@
 *{
   font-family: "Roboto", sans-serif;
 }
+body{
+  @apply text-gray-800
+}
 
  .text-primary{
   @apply text-gray-800
