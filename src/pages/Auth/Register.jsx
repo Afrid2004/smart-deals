@@ -69,10 +69,14 @@ const Register = () => {
           displayName: name,
         }).then(() => {
           setUser({ ...result.user, displayName: name });
+          const names = result.user.displayName || "User";
+          const [first, last] = names.split(" ");
+          const avatar = (first[0] || "") + (last ? last[0] : "");
           emailVerify();
           const userData = {
             name: name,
             email: email,
+            avatar,
           };
           fetch("http://localhost:3000/users", {
             method: "POST",
@@ -116,6 +120,7 @@ const Register = () => {
         const userData = {
           name: result.user.displayName,
           email: result.user.email,
+          photo: result.user.photoURL,
         };
         fetch("http://localhost:3000/users", {
           method: "POST",

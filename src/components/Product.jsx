@@ -19,7 +19,7 @@ const Product = ({ product }) => {
         <div>
           <Link
             to={`/product/${product._id}`}
-            className="border border-teal-600 text-teal-600 px-4 py-2 w-full block text-center hover:bg-teal-800 hover:text-white duration-150 rounded-md"
+            className="gradient text-white px-4 py-2 w-full block text-center rounded-md"
           >
             View Details
           </Link>

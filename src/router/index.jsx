@@ -56,7 +56,8 @@ export const router = createBrowserRouter([
       {
         path: "/product/:id",
         element: <ProductDetails />,
-        loader: () => fetch("http://localhost:3000/products"),
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/products/${params.id}`),
         HydrateFallback: Loading,
       },
     ],
