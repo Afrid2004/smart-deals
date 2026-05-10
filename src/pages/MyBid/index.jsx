@@ -12,11 +12,14 @@ const MyBid = () => {
   useEffect(() => {
     if (user?.email) {
       setLoading(true);
-      fetch(`http://localhost:3000/bids?email=${user?.email}`)
+      fetch(`http://localhost:3000/bids?email=${user?.email}`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
         .then((res) => res.json())
         .then((data) => {
           setBids(data);
-          console.log(data);
         })
         .catch((err) => console.log(err.message))
         .finally(() => setLoading(false));
