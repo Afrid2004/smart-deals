@@ -1,7 +1,7 @@
 import { Eye, EyeOff, Lock, Mail, UserRound } from "lucide-react";
 import React, { use, useState } from "react";
 import { Link, useNavigate } from "react-router";
-import { AuthContext } from "../../context/AuthContext";
+import useAuth from "../../Hooks/AuthContextHook";
 
 const Register = () => {
   const {
@@ -12,7 +12,7 @@ const Register = () => {
     updateUser,
     logout,
     signInWithGoogle,
-  } = use(AuthContext);
+  } = useAuth();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);

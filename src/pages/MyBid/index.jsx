@@ -1,28 +1,36 @@
 import React, { use, useEffect, useState } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import useAuth from "../../Hooks/AuthContextHook";
 import { CircleAlert } from "lucide-react";
-import Loading from "../../components/Loading";
 import Swal from "sweetalert2";
+import AxiosHook from "../../Hooks/AxiosHook";
 
 const MyBid = () => {
-  const { user } = use(AuthContext);
+  const { user } = useAuth();
   const [bids, setBids] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const axiosInstance = AxiosHook();
 
   useEffect(() => {
     if (user?.email) {
-      setLoading(true);
-      fetch(`http://localhost:3000/bids?email=${user?.email}`, {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setBids(data);
+      //using axios
+      axiosInstance
+        .get(`/bids?email=${user?.email}`, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         })
-        .catch((err) => console.log(err.message))
-        .finally(() => setLoading(false));
+        .then((res) => setBids(res.data))
+        .catch((err) => console.log(err));
+
+      // fetch(`http://localhost:3000/bids?email=${user?.email}`, {
+      //   headers: {
+      //     authorization: `Bearer ${localStorage.getItem("token")}`,
+      //   },
+      // })
+      //   .then((res) => res.json())
+      //   .then((data) => {
+      //     setBids(data);
+      //   })
+      //   .catch((err) => console.log(err.message))
     }
   }, [user?.email]);
 
@@ -58,9 +66,6 @@ const MyBid = () => {
     });
   };
 
-  if (loading) {
-    return <Loading />;
-  }
   return (
     <div className="bg-gray-100">
       <div className="container py-10">

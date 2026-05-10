@@ -1,8 +1,8 @@
 import React, { use } from "react";
-import { AuthContext } from "../context/AuthContext";
+import useAuth from "../Hooks/AuthContextHook";
 
 const Avatar = () => {
-  const { user } = use(AuthContext);
+  const { user } = useAuth();
   const name = user?.displayName || "User";
   const [first, last] = name.split(" ");
   const avatar = (first[0] || "") + (last ? last[0] : "");

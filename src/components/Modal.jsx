@@ -8,11 +8,11 @@ import {
   X,
 } from "lucide-react";
 import React, { use, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
+import useAuth from "../Hooks/AuthContextHook";
 
 const Modal = ({ closeModal, productID, refreshBids }) => {
-  const { user } = use(AuthContext);
+  const { user } = useAuth();
   const name = user?.displayName || "User";
   const [first, last] = name.split(" ");
   const avatar = (first[0] || "") + (last ? last[0] : "");

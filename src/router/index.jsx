@@ -10,6 +10,7 @@ import PrivateRoute from "../components/PrivateRoute";
 import AuthRoute from "../components/AuthRoute";
 import ProductDetails from "../components/ProductDetails";
 import Loading from "../components/Loading";
+import CreateProduct from "../pages/CreateProduct/CreateProduct";
 
 export const router = createBrowserRouter([
   {
@@ -59,6 +60,14 @@ export const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`http://localhost:3000/products/${params.id}`),
         HydrateFallback: Loading,
+      },
+      {
+        path: "/create-product",
+        element: (
+          <PrivateRoute>
+            <CreateProduct />
+          </PrivateRoute>
+        ),
       },
     ],
   },

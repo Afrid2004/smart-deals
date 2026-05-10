@@ -1,10 +1,10 @@
 import React, { use } from "react";
-import { AuthContext } from "../context/AuthContext";
 import Loading from "./Loading";
 import { Navigate, useLocation } from "react-router";
+import useAuth from "../Hooks/AuthContextHook";
 
 const AuthRoute = ({ children }) => {
-  const { user, loading } = use(AuthContext);
+  const { user, loading } = useAuth();
   const location = useLocation();
   if (loading) {
     return <Loading />;

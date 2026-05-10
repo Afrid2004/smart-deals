@@ -71,6 +71,8 @@ const AuthProvider = ({ children }) => {
           .then((res) => res.json())
           .then((data) => localStorage.setItem("token", data.token))
           .catch((err) => console.log(err.message));
+      } else {
+        localStorage.removeItem("token");
       }
       //get JWT token
 

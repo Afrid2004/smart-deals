@@ -1,10 +1,10 @@
 import React, { use } from "react";
 import { Link, NavLink } from "react-router";
-import { AuthContext } from "../context/AuthContext";
 import Avatar from "./Avatar";
+import useAuth from "../Hooks/AuthContextHook";
 
 const Navbar = () => {
-  const { user, logout } = use(AuthContext);
+  const { user, logout } = useAuth();
 
   const handleLogout = () => {
     logout();
@@ -27,6 +27,9 @@ const Navbar = () => {
           </NavLink>
           <NavLink to="/my-bids" className="hover:text-teal-600">
             My Bids
+          </NavLink>
+          <NavLink to="/create-product" className="hover:text-teal-600">
+            Create Product
           </NavLink>
         </>
       )}
