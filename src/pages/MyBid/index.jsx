@@ -2,22 +2,20 @@ import React, { use, useEffect, useState } from "react";
 import useAuth from "../../Hooks/AuthContextHook";
 import { CircleAlert } from "lucide-react";
 import Swal from "sweetalert2";
-import AxiosHook from "../../Hooks/AxiosHook";
+import AxiosSecureHook from "../../Hooks/AxiosSecureHook";
+// import AxiosHook from "../../Hooks/AxiosHook";
 
 const MyBid = () => {
   const { user } = useAuth();
   const [bids, setBids] = useState([]);
-  const axiosInstance = AxiosHook();
+  const axiosSecureInstance = AxiosSecureHook();
+  // const axiosInstance = AxiosHook();
 
   useEffect(() => {
     if (user?.email) {
       //using axios
-      axiosInstance
-        .get(`/bids?email=${user?.email}`, {
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        })
+      axiosSecureInstance
+        .get(`/bids?email=${user?.email}`)
         .then((res) => setBids(res.data))
         .catch((err) => console.log(err));
 

@@ -62,7 +62,11 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/products/${params.id}`),
+          fetch(`http://localhost:3000/products/${params.id}`, {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }),
         HydrateFallback: Loading,
       },
       {

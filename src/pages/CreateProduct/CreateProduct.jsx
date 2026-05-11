@@ -13,8 +13,9 @@ import {
 import React, { use, useState } from "react";
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/AuthContextHook";
-import AxiosHook from "../../Hooks/AxiosHook";
+// import AxiosHook from "../../Hooks/AxiosHook";
 import { data } from "react-router";
+import AxiosSecureHook from "../../Hooks/AxiosSecureHook";
 
 const CreateProduct = () => {
   const { user } = useAuth();
@@ -31,7 +32,8 @@ const CreateProduct = () => {
   const handleSubmit = (e) => {
     setErr("");
     e.preventDefault();
-    const axiosInstance = AxiosHook();
+    // const axiosInstance = AxiosHook();
+    const axiosSecureInstance = AxiosSecureHook();
     const title = e.target.title.value.trim(),
       price_min = parseInt(e.target.min_price.value),
       price_max = parseInt(e.target.max_price.value),
@@ -103,7 +105,7 @@ const CreateProduct = () => {
     console.log(product);
 
     setLoading(true);
-    axiosInstance
+    axiosSecureInstance
       .post("/products", product)
       .then((res) => {
         console.log(res.data);
