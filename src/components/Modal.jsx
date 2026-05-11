@@ -11,7 +11,7 @@ import React, { use, useState } from "react";
 import Swal from "sweetalert2";
 import useAuth from "../Hooks/AuthContextHook";
 
-const Modal = ({ closeModal, productID, refreshBids }) => {
+const Modal = ({ closeModal, productID, refreshBids, minPrice, maxPrice }) => {
   const { user } = useAuth();
   const name = user?.displayName || "User";
   const [first, last] = name.split(" ");
@@ -26,15 +26,20 @@ const Modal = ({ closeModal, productID, refreshBids }) => {
 
     const name = e.target.name.value;
     const email = e.target.email.value;
-    const price = e.target.price.value;
+    const price = parseFloat(e.target.price.value);
     const phone = e.target.phone.value;
+
+    if (minPrice > price) {
+      alert(`Price must at least ${minPrice} USD`);
+      return;
+    }
 
     const bidDetails = {
       product: productID,
       buyer_name: name,
       buyer_email: email,
       buyer_image: user?.photoURL || "",
-      bid_price: parseFloat(price),
+      bid_price: price,
       buyer_contact: phone,
       status: "Pending",
     };

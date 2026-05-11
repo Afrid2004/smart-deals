@@ -86,7 +86,27 @@ const MyBid = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {bids.map((bid, index) => {
+                  {bids?.map((bid, index) => {
+                    if (!bid?.productData) {
+                      return (
+                        <tr key={index} className="border-t border-gray-300">
+                          <td colSpan="5" className="py-5 text-red-500">
+                            Product Deleted
+                          </td>
+                          <td className="py-5">
+                            <div className="flex gap-2">
+                              <button
+                                onClick={() => handleRemoveBid(bid._id)}
+                                className="px-4 py-1 border border-red-600 text-red-600 hover:bg-red-600 hover:text-white duration-150 cursor-pointer"
+                              >
+                                Remove Bid
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    }
+
                     const names = bid?.buyer_name || "User";
                     const [first, last] = names.split(" ");
                     const avatar = (first[0] || "") + (last ? last[0] : "");
@@ -99,17 +119,17 @@ const MyBid = () => {
                           <div className="flex gap-2 items-center">
                             <div className="w-20 h-12 shrink-0 overflow-hidden border border-gray-200">
                               <img
-                                src={bid.productData.image}
+                                src={bid.productData?.image}
                                 className="w-full h-full object-cover"
                               />
                             </div>
                             <div>
                               <h2 className="font-semibold">
-                                {bid.productData.title}
+                                {bid.productData?.title}
                               </h2>
                               <p className="text-gray-500 whitespace-nowrap">
-                                ${bid.productData.price_min} - $
-                                {bid.productData.price_max}
+                                ${bid.productData?.price_min} - $
+                                {bid.productData?.price_max}
                               </p>
                             </div>
                           </div>

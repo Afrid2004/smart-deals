@@ -7,7 +7,7 @@ import Avatar from "./Avatar";
 const ProductDetails = () => {
   const product = useLoaderData();
   const [modal, setModal] = useState(false);
-  const { _id: productID } = product;
+  const { _id: productID } = product; //renamed _id with productID
   const [bids, setBids] = useState([]);
 
   const openModal = () => {
@@ -53,7 +53,7 @@ const ProductDetails = () => {
                     <h2 className="gradient-text font-medium text-lg">
                       Usage Time:
                     </h2>
-                    <p className="text-xl font-medium">{product.usage}</p>
+                    <p className="text-xl font-medium">{product.usage_time}</p>
                   </div>
                 </div>
                 <div>
@@ -251,6 +251,8 @@ const ProductDetails = () => {
           closeModal={closeModal}
           refreshBids={fetchBids}
           productID={productID}
+          minPrice={product.price_min}
+          maxPrice={product.price_max}
         />
       )}
     </div>
