@@ -10,12 +10,14 @@ import {
 import React, { use, useState } from "react";
 import Swal from "sweetalert2";
 import useAuth from "../Hooks/AuthContextHook";
+import AxiosSecureHook from "../Hooks/AxiosSecureHook";
 
 const Modal = ({ closeModal, productID, refreshBids, minPrice, maxPrice }) => {
   const { user } = useAuth();
   const name = user?.displayName || "User";
   const [first, last] = name.split(" ");
   const avatar = (first[0] || "") + (last ? last[0] : "");
+  const axiosSecureInstance = AxiosSecureHook();
   const spin = (
     <div className="w-5 h-5 border-2 border-white border-t-white/30 border-r-white/30 rounded-full animate-spin"></div>
   );
@@ -44,16 +46,17 @@ const Modal = ({ closeModal, productID, refreshBids, minPrice, maxPrice }) => {
       status: "Pending",
     };
     setLoading(true);
-    fetch("http://localhost:3000/bids", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(bidDetails),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.insertedId) {
+    // fetch("http://localhost:3000/bids", {
+    //   method: "POST",
+    //   headers: {
+    //     "content-type": "application/json",
+    //   },
+    //   body: JSON.stringify(bidDetails),
+    // })
+    axiosSecureInstance
+      .post("/bids", bidDetails)
+      .then((res) => {
+        if (res.data.insertedId) {
           setLoading(false);
           refreshBids();
           closeModal();
@@ -63,8 +66,8 @@ const Modal = ({ closeModal, productID, refreshBids, minPrice, maxPrice }) => {
             timer: 3000,
             timerProgressBar: true,
           });
-        } else if (data.message) {
-          alert(data.message);
+        } else if (res.data.message) {
+          alert(res.data.message);
         }
       })
       .catch((err) => {
