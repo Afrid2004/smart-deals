@@ -102,13 +102,10 @@ const CreateProduct = () => {
       created_at: new Date().toISOString(),
     };
 
-    console.log(product);
-
     setLoading(true);
     axiosSecureInstance
       .post("/products", product)
       .then((res) => {
-        console.log(res.data);
         if (res.data.insertedId) {
           Swal.fire({
             title: "Your Product has been placed.",
