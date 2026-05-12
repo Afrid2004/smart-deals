@@ -97,6 +97,8 @@ const AllProducts = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
               {loading ? (
                 <Loading />
+              ) : products.length === 0 ? (
+                <p className="text-center col-span-12">No Product Found</p>
               ) : (
                 products.map((product) => (
                   <Product key={product._id} product={product} />
