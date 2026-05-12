@@ -9,6 +9,7 @@ const ProductDetails = () => {
   const [modal, setModal] = useState(false);
   const { _id: productID } = product; //renamed _id with productID
   const [bids, setBids] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const openModal = () => {
     setModal(true);
@@ -16,6 +17,31 @@ const ProductDetails = () => {
   const closeModal = () => {
     setModal(false);
   };
+
+  useEffect(() => {
+    setLoading(true);
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+
+    fetch(`https://smart-deals-backend-server.vercel.app/products/${id}`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setProduct(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  }, [id]);
 
   const fetchBids = () => {
     fetch(
