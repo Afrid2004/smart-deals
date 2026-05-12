@@ -23,7 +23,6 @@ const AllProducts = () => {
         `/products?limit=${limit}&skip=${currentPage * limit}&sort=${sort}&order=${order}&search=${search}`,
       )
       .then((res) => {
-        console.log(res.data);
         setProducts(res.data.data);
         setTotalProduct(res.data.total);
       })
