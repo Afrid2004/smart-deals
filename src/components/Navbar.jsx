@@ -17,14 +17,14 @@ const Navbar = () => {
       <NavLink to="/all-products" className="hover:text-teal-600">
         All Products
       </NavLink>
-      <NavLink to="/blogs" className="hover:text-teal-600">
+      {/* <NavLink to="/blogs" className="hover:text-teal-600">
         Blogs
-      </NavLink>
+      </NavLink> */}
       {user?.emailVerified && (
         <>
-          <NavLink to="/my-products" className="hover:text-teal-600">
+          {/* <NavLink to="/my-products" className="hover:text-teal-600">
             My Products
-          </NavLink>
+          </NavLink> */}
           <NavLink to="/my-bids" className="hover:text-teal-600">
             My Bids
           </NavLink>
