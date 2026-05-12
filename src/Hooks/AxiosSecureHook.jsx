@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import useAuth from "./AuthContextHook";
 import { useNavigate } from "react-router";
 const axiosInstance = axios.create({
-  baseURL: "https://smart-deals-backend-server.vercel.app",
+  baseURL: "http://localhost:3000",
 });
 
 const AxiosSecureHook = () => {

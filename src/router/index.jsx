@@ -11,6 +11,7 @@ import AuthRoute from "../components/AuthRoute";
 import ProductDetails from "../components/ProductDetails";
 import Loading from "../components/Loading";
 import CreateProduct from "../pages/CreateProduct/CreateProduct";
+import AllProducts from "../pages/AllProducts/AllProducts";
 
 export const router = createBrowserRouter([
   {
@@ -62,14 +63,11 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(
-            `https://smart-deals-backend-server.vercel.app/products/${params.id}`,
-            {
-              headers: {
-                authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
+          fetch(`http://localhost:3000/products/${params.id}`, {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("token")}`,
             },
-          ),
+          }),
         HydrateFallback: Loading,
       },
       {
@@ -79,6 +77,10 @@ export const router = createBrowserRouter([
             <CreateProduct />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/all-products",
+        element: <AllProducts />,
       },
     ],
   },

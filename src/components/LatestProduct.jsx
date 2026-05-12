@@ -1,9 +1,9 @@
 import React from "react";
 import LatestProductComponent from "./latestProductComponent";
 
-const latestProduct = fetch(
-  "https://smart-deals-backend-server.vercel.app/latest-products",
-).then((res) => res.json());
+const latestProduct = fetch("http://localhost:3000/latest-products").then(
+  (res) => res.json(),
+);
 
 const LatestProduct = () => {
   return (
