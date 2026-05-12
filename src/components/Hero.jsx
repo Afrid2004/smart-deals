@@ -39,10 +39,16 @@ const Hero = () => {
               </div>
             </form>
             <div className="flex items-center justify-center gap-3">
-              <Link className="gradient text-white px-4 py-3 rounded-lg">
+              <Link
+                to="/all-products"
+                className="gradient text-white px-4 py-3 rounded-lg"
+              >
                 Watch All Products
               </Link>
-              <Link className="border border-gray-800 text-gray-800 hover:bg-teal-950 duration-150 hover:text-white px-4 py-3 rounded-lg">
+              <Link
+                to="/create-product"
+                className="border border-gray-800 text-gray-800 hover:bg-teal-950 duration-150 hover:text-white px-4 py-3 rounded-lg"
+              >
                 Post an Product
               </Link>
             </div>
