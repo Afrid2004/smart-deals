@@ -3,13 +3,19 @@ import React, { use, useEffect, useState } from "react";
 import { Link, useLoaderData } from "react-router";
 import Modal from "./Modal";
 import Avatar from "./Avatar";
+import Loading from "./Loading";
+import useAuth from "../Hooks/AuthContextHook";
 
 const ProductDetails = () => {
   const product = useLoaderData();
   const [modal, setModal] = useState(false);
   const { _id: productID } = product; //renamed _id with productID
   const [bids, setBids] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const { loading } = useAuth();
+
+  if (loading) {
+    return <Loading />;
+  }
 
   const openModal = () => {
     setModal(true);
@@ -17,31 +23,6 @@ const ProductDetails = () => {
   const closeModal = () => {
     setModal(false);
   };
-
-  useEffect(() => {
-    setLoading(true);
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      setLoading(false);
-      return;
-    }
-
-    fetch(`https://smart-deals-backend-server.vercel.app/products/${id}`, {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setProduct(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-  }, [id]);
 
   const fetchBids = () => {
     fetch(
@@ -63,8 +44,8 @@ const ProductDetails = () => {
             <div className="aspect-4/4 overflow-hidden rounded-lg mb-5">
               <img
                 className="w-full h-full object-cover"
-                src={product.image}
-                alt={product.title}
+                src={product?.image}
+                alt={product?.title}
               />
             </div>
             <div className="bg-white p-5 border border-gray-200 rounded-lg">
@@ -75,17 +56,17 @@ const ProductDetails = () => {
                     <h2 className="gradient-text font-medium text-lg">
                       Condition:
                     </h2>
-                    <p className="text-xl font-medium">{product.condition}</p>
+                    <p className="text-xl font-medium">{product?.condition}</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <h2 className="gradient-text font-medium text-lg">
                       Usage Time:
                     </h2>
-                    <p className="text-xl font-medium">{product.usage_time}</p>
+                    <p className="text-xl font-medium">{product?.usage_time}</p>
                   </div>
                 </div>
                 <div>
-                  <p className="text-xl">{product.description}</p>
+                  <p className="text-xl">{product?.description}</p>
                 </div>
               </div>
             </div>
@@ -99,28 +80,28 @@ const ProductDetails = () => {
                 </Link>
               </div>
               <div className="mb-5">
-                <h1 className="font-bold text-5xl">{product.title}</h1>
+                <h1 className="font-bold text-5xl">{product?.title}</h1>
               </div>
               <div>
                 <div className="px-4 py-1 bg-teal-600/20 border border-teal-600/30 text-teal-600 w-fit rounded-4xl">
-                  <p className="text-sm">{product.category}</p>
+                  <p className="text-sm">{product?.category}</p>
                 </div>
               </div>
             </div>
             <div className="bg-white p-5 border border-gray-200 rounded-lg mb-5">
               <p className="mb-3">Price starts from</p>
-              <h2 className="text-[28px] font-bold text-teal-600">{`$${product.price_min} - ${product.price_max}`}</h2>
+              <h2 className="text-[28px] font-bold text-teal-600">{`$${product?.price_min} - ${product?.price_max}`}</h2>
             </div>
             <div className="bg-white p-5 border border-gray-200 rounded-lg mb-5">
               <h2 className="text-2xl font-bold mb-3">Product Details</h2>
               <div className="flex items-center gap-2 mb-1">
                 <p className="font-bold">Product ID: </p>
-                <p>{product._id}</p>
+                <p>{product?._id}</p>
               </div>
               <div className="flex items-center gap-2">
                 <p className="font-bold">Posted on: </p>
                 <p>
-                  {new Date(product.created_at).toLocaleString("en-GB", {
+                  {new Date(product?.created_at).toLocaleString("en-GB", {
                     day: "2-digit",
                     month: "2-digit",
                     year: "numeric",
@@ -138,29 +119,29 @@ const ProductDetails = () => {
                 <div className="w-12 h-12 flex items-center justify-center rounded-full overflow-hidden border border-gray-200">
                   <img
                     className="w-full h-full object-cover "
-                    src={product.seller_image}
-                    alt={product.seller_name}
+                    src={product?.seller_image}
+                    alt={product?.seller_name}
                   />
                 </div>
                 <div>
                   <h2 className="font-semibold text-[16px]">
-                    {product.seller_name}
+                    {product?.seller_name}
                   </h2>
-                  <p className="text-gray-500">{product.email}</p>
+                  <p className="text-gray-500">{product?.email}</p>
                 </div>
               </div>
               <div className="flex items-center gap-2 mb-1">
                 <p className="font-bold">Location: </p>
-                <p>{product.location}</p>
+                <p>{product?.location}</p>
               </div>
               <div className="flex items-center gap-2 mb-2">
                 <p className="font-bold">Contact: </p>
-                <p>+88{product.seller_contact}</p>
+                <p>+88{product?.seller_contact}</p>
               </div>
               <div className="flex items-center gap-2 mb-1">
                 <p className="font-bold">Status: </p>
                 <div className="p-2 bg-[#FFC107] w-fit rounded-4xl">
-                  <p className="text-xs leading-none">{product.status}</p>
+                  <p className="text-xs leading-none">{product?.status}</p>
                 </div>
               </div>
             </div>
@@ -205,14 +186,16 @@ const ProductDetails = () => {
                           <div className="flex gap-2 items-center">
                             <div className="w-20 h-12 shrink-0 overflow-hidden border border-gray-200">
                               <img
-                                src={product.image}
+                                src={product?.image}
                                 className="w-full h-full object-cover"
                               />
                             </div>
                             <div>
-                              <h2 className="font-semibold">{product.title}</h2>
+                              <h2 className="font-semibold">
+                                {product?.title}
+                              </h2>
                               <p className="text-gray-500 whitespace-nowrap">
-                                ${product.price_min} - ${product.price_max}
+                                ${product?.price_min} - ${product?.price_max}
                               </p>
                             </div>
                           </div>

@@ -61,16 +61,16 @@ export const router = createBrowserRouter([
             <ProductDetails />
           </PrivateRoute>
         ),
-        // loader: ({ params }) =>
-        //   fetch(
-        //     `https://smart-deals-backend-server.vercel.app/products/${params.id}`,
-        //     {
-        //       headers: {
-        //         authorization: `Bearer ${localStorage.getItem("token")}`,
-        //       },
-        //     },
-        //   ),
-        // HydrateFallback: Loading,
+        loader: ({ params }) =>
+          fetch(
+            `https://smart-deals-backend-server.vercel.app/products/${params.id}`,
+            {
+              headers: {
+                authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            },
+          ),
+        HydrateFallback: Loading,
       },
       {
         path: "/create-product",
