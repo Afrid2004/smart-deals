@@ -24,6 +24,8 @@ const CreateProduct = () => {
   const avatar = (first[0] || "") + (last ? last[0] : "");
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false);
+  // const axiosInstance = AxiosHook();
+  const axiosSecureInstance = AxiosSecureHook();
 
   const spin = (
     <div className="w-5 h-5 border-2 border-white border-t-white/30 border-r-white/30 rounded-full animate-spin"></div>
@@ -32,8 +34,6 @@ const CreateProduct = () => {
   const handleSubmit = (e) => {
     setErr("");
     e.preventDefault();
-    // const axiosInstance = AxiosHook();
-    const axiosSecureInstance = AxiosSecureHook();
     const title = e.target.title.value.trim(),
       price_min = parseInt(e.target.min_price.value),
       price_max = parseInt(e.target.max_price.value),
