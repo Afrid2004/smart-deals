@@ -46,7 +46,7 @@ const Modal = ({ closeModal, productID, refreshBids, minPrice, maxPrice }) => {
       status: "Pending",
     };
     setLoading(true);
-    // fetch("http://localhost:3000/bids", {
+    // fetch("https://smart-deals-backend-server.vercel.app/bids", {
     //   method: "POST",
     //   headers: {
     //     "content-type": "application/json",
