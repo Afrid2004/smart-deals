@@ -25,9 +25,7 @@ const ProductDetails = () => {
   };
 
   const fetchBids = () => {
-    fetch(
-      `https://smart-deals-backend-989k.onrender.com/products/bid/${productID}`,
-    )
+    fetch(`http://localhost:3000/products/bid/${productID}`)
       .then((res) => res.json())
       .then((data) => setBids(data));
   };

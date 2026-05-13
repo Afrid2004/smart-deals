@@ -46,7 +46,7 @@ const Modal = ({ closeModal, productID, refreshBids, minPrice, maxPrice }) => {
       status: "Pending",
     };
     setLoading(true);
-    // fetch("https://smart-deals-backend-989k.onrender.com/bids", {
+    // fetch("http://localhost:3000/bids", {
     //   method: "POST",
     //   headers: {
     //     "content-type": "application/json",

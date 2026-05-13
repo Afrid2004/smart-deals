@@ -23,9 +23,9 @@ const Navbar = () => {
       <NavLink to="/my-bids" className="hover:text-teal-600">
         My Bids
       </NavLink>
-      {/* <NavLink to="/my-products" className="hover:text-teal-600">
-            My Products
-          </NavLink> */}
+      <NavLink to="/my-products" className="hover:text-teal-600">
+        My Products
+      </NavLink>
     </>
   );
   const menus = (

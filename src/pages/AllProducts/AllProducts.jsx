@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react";
 import AxiosHook from "../../Hooks/AxiosHook";
 import Product from "../../components/Product";
 import Loading from "../../components/Loading";
-import { ArrowLeft, ArrowRight, ArrowUpDown, Search } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpDown,
+  CircleAlert,
+  Search,
+} from "lucide-react";
 import { useSearchParams } from "react-router";
 
 const AllProducts = () => {
@@ -101,7 +107,10 @@ const AllProducts = () => {
               {loading ? (
                 <Loading />
               ) : products.length === 0 ? (
-                <p className="text-center col-span-12">No Product Found</p>
+                <p className="p-4 rounded-md bg-amber-300/30 text-amber-600 border border-amber-300/50 flex items-center gap-2">
+                  <CircleAlert className="w-5 shrink-0" />
+                  No product found.
+                </p>
               ) : (
                 products.map((product) => (
                   <Product key={product._id} product={product} />

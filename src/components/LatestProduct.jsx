@@ -2,9 +2,9 @@ import React, { Suspense } from "react";
 import LatestProductComponent from "./latestProductComponent";
 import Loading from "./Loading";
 
-const latestProduct = fetch(
-  "https://smart-deals-backend-989k.onrender.com/latest-products",
-).then((res) => res.json());
+const latestProduct = fetch("http://localhost:3000/latest-products").then(
+  (res) => res.json(),
+);
 
 const LatestProduct = () => {
   return (

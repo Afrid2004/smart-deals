@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 const axiosInstance = axios.create({
-  baseURL: "https://smart-deals-backend-989k.onrender.com",
+  baseURL: "http://localhost:3000",
 });
 
 const AxiosHook = () => {

@@ -63,14 +63,11 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(
-            `https://smart-deals-backend-989k.onrender.com/products/${params.id}`,
-            {
-              headers: {
-                authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
+          fetch(`http://localhost:3000/products/${params.id}`, {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("token")}`,
             },
-          ),
+          }),
         HydrateFallback: Loading,
       },
       {
