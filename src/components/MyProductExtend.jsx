@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router";
 import AxiosHook from "../Hooks/AxiosHook";
 import Swal from "sweetalert2";
+import AxiosSecureHook from "../Hooks/AxiosSecureHook";
 
 const MyProductExtend = ({ product, setProducts, setTotalProduct }) => {
-  const axiosInstance = AxiosHook();
+  const axiosSecureInstance = AxiosSecureHook();
   const handleProductDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -16,7 +17,7 @@ const MyProductExtend = ({ product, setProducts, setTotalProduct }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed)
-        axiosInstance
+        axiosSecureInstance
           .delete(`/products/${id}`)
           .then((res) => {
             console.log(res.data);

@@ -61,7 +61,7 @@ const Login = () => {
         email: result.user.email,
         photo: result.user.photoURL,
       };
-      fetch("http://localhost:3000/users", {
+      fetch("https://smart-deals-backend-989k.onrender.com/users", {
         method: "POST",
         headers: {
           "content-type": "application/json",

@@ -134,7 +134,7 @@ const CreateProduct = () => {
     //   status: "Pending",
     // };
     // setLoading(true);
-    // fetch("http://localhost:3000/bids", {
+    // fetch("https://smart-deals-backend-989k.onrender.com/bids", {
     //   method: "POST",
     //   headers: {
     //     "content-type": "application/json",
