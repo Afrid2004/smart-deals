@@ -26,7 +26,7 @@ const ProductDetails = () => {
 
   const fetchBids = () => {
     fetch(
-      `https://smart-deals-backend-server.vercel.app/products/bid/${productID}`,
+      `https://smart-deals-backend-989k.onrender.com/products/bid/${productID}`,
     )
       .then((res) => res.json())
       .then((data) => setBids(data));

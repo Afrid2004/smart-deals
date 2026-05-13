@@ -1,8 +1,9 @@
-import React from "react";
+import React, { Suspense } from "react";
 import LatestProductComponent from "./latestProductComponent";
+import Loading from "./Loading";
 
 const latestProduct = fetch(
-  "https://smart-deals-backend-server.vercel.app/latest-products",
+  "https://smart-deals-backend-989k.onrender.com/latest-products",
 ).then((res) => res.json());
 
 const LatestProduct = () => {
@@ -14,9 +15,11 @@ const LatestProduct = () => {
         </h1>
       </div>
       <div>
-        <LatestProductComponent
-          latestProduct={latestProduct}
-        ></LatestProductComponent>
+        <Suspense fallback={<Loading />}>
+          <LatestProductComponent
+            latestProduct={latestProduct}
+          ></LatestProductComponent>
+        </Suspense>
       </div>
     </div>
   );

@@ -19,7 +19,7 @@ const MyBid = () => {
         .then((res) => setBids(res.data))
         .catch((err) => console.log(err));
 
-      // fetch(`https://smart-deals-backend-server.vercel.app/bids?email=${user?.email}`, {
+      // fetch(`https://smart-deals-backend-989k.onrender.com/bids?email=${user?.email}`, {
       //   headers: {
       //     authorization: `Bearer ${localStorage.getItem("token")}`,
       //   },
@@ -43,7 +43,7 @@ const MyBid = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed)
-        fetch(`https://smart-deals-backend-server.vercel.app/bids/${id}`, {
+        fetch(`https://smart-deals-backend-989k.onrender.com/bids/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())

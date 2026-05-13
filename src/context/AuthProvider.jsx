@@ -61,7 +61,7 @@ const AuthProvider = ({ children }) => {
       //get JWT token
       if (currentUser) {
         const email = { email: currentUser.email };
-        fetch("https://smart-deals-backend-server.vercel.app/get-jwt-token", {
+        fetch("https://smart-deals-backend-989k.onrender.com/get-jwt-token", {
           method: "POST",
           headers: {
             "content-type": "application/json",

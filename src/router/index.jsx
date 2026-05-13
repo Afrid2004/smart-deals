@@ -64,7 +64,7 @@ export const router = createBrowserRouter([
         ),
         loader: ({ params }) =>
           fetch(
-            `https://smart-deals-backend-server.vercel.app/products/${params.id}`,
+            `https://smart-deals-backend-989k.onrender.com/products/${params.id}`,
             {
               headers: {
                 authorization: `Bearer ${localStorage.getItem("token")}`,

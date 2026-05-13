@@ -134,7 +134,7 @@ const CreateProduct = () => {
     //   status: "Pending",
     // };
     // setLoading(true);
-    // fetch("https://smart-deals-backend-server.vercel.app/bids", {
+    // fetch("https://smart-deals-backend-989k.onrender.com/bids", {
     //   method: "POST",
     //   headers: {
     //     "content-type": "application/json",

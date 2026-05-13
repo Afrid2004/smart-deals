@@ -1,6 +1,7 @@
 import React from "react";
 import Hero from "../../components/Hero";
 import LatestProduct from "../../components/LatestProduct";
+import ErrorBoundary from "../../components/ErrorBoundary";
 
 const Home = () => {
   return (
@@ -8,7 +9,9 @@ const Home = () => {
       <Hero />
       <div className="bg-gray-100">
         <div className="container">
-          <LatestProduct />
+          <ErrorBoundary fallback="Failed to load product">
+            <LatestProduct />
+          </ErrorBoundary>
         </div>
       </div>
     </div>
