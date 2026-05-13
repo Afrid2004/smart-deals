@@ -3,16 +3,19 @@ import AxiosHook from "../../Hooks/AxiosHook";
 import Product from "../../components/Product";
 import Loading from "../../components/Loading";
 import { ArrowLeft, ArrowRight, ArrowUpDown, Search } from "lucide-react";
+import { useSearchParams } from "react-router";
 
 const AllProducts = () => {
   const axiosInstance = AxiosHook();
+  const [searchParams] = useSearchParams();
+  const serachValue = searchParams.get("search"); //get serch value from hero section search input
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalProduct, setTotalProduct] = useState(0); //setTotalProduct used in axios api
   const [sort, setSort] = useState("created_at");
   const [order, setOrder] = useState("desc");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(serachValue || "");
   let limit = 6;
   const totalPage = Math.ceil(totalProduct / limit);
 
@@ -67,6 +70,7 @@ const AllProducts = () => {
                     type="text"
                     name="name"
                     id="name"
+                    value={search}
                     className="outline-none w-full px-2.5 h-full rounded-sm rounded-tr-none rounded-br-none  border border-gray-300/70"
                     placeholder="Search Products..."
                   />

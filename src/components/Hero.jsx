@@ -1,8 +1,18 @@
 import { Search } from "lucide-react";
 import React from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const Hero = () => {
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const searchValue = e.target.search.value.trim();
+    if (!searchValue) {
+      alert("Empty value. Please enter your product name.");
+      return;
+    }
+    navigate(`/all-products?search=${searchValue}`);
+  };
   return (
     <div className=" bg-linear-to-br from-teal-600/10 to-teal-950/20">
       <div className="container py-15">
@@ -18,7 +28,7 @@ const Hero = () => {
             </p>
           </div>
           <div className="mb-10">
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="w-sm md:w-120  mb-7 h-12 flex items-center justify-between shadow-md rounded-4xl overflow-hidden bg-white">
                 <div className="flex-1 h-full">
                   <input
