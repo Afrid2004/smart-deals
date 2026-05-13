@@ -7,9 +7,9 @@ const Footer = () => {
   return (
     <div className="bg-gray-900">
       <div className="container">
-        <div className="py-15">
-          <div className="grid grid-cols-12 gap-2">
-            <div className="col-span-3">
+        <div className="py-10 lg:py-15">
+          <div className="grid grid-cols-12 gap-4 lg:gap-2">
+            <div className="col-span-12 lg:col-span-3">
               <Link to="/">
                 <div className="w-35 mb-3">
                   <img
@@ -24,8 +24,7 @@ const Footer = () => {
                 the best deals from across Bangladesh.
               </p>
             </div>
-
-            <div className="col-span-2">
+            <div className="col-span-12 md:col-span-6 lg:col-span-2">
               <h3 className="text-white font-medium text-2xl">Quick Links</h3>
               <div className="flex flex-col gap-3 mt-5 text-secondary">
                 <Link className="hover:text-white">All Products</Link>
@@ -34,7 +33,7 @@ const Footer = () => {
                 <Link className="hover:text-white">Register</Link>
               </div>
             </div>
-            <div className="col-span-2">
+            <div className="col-span-12 md:col-span-6 lg:col-span-2">
               <h3 className="text-white font-medium text-2xl">Categories</h3>
               <div className="flex flex-col gap-3 mt-5 text-secondary">
                 <Link className="hover:text-white">Electronics</Link>
@@ -43,7 +42,7 @@ const Footer = () => {
                 <Link className="hover:text-white">Groceries</Link>
               </div>
             </div>
-            <div className="col-span-3">
+            <div className="col-span-12 md:col-span-6 lg:col-span-3">
               <h3 className="text-white font-medium text-2xl">
                 Contact & Support
               </h3>
@@ -73,7 +72,7 @@ const Footer = () => {
                 </a>
               </div>
             </div>
-            <div className="col-span-2">
+            <div className="col-span-12 md:col-span-6 lg:col-span-2">
               <h3 className="text-white font-medium text-2xl">Find us on</h3>
               <div className="flex flex-col gap-3 mt-5 text-secondary">
                 <a
@@ -129,7 +128,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="py-5 border-t border-gray-700 text-secondary flex items-center justify-between">
+        <div className="py-5 border-t border-gray-700 text-secondary flex flex-col lg:flex-row items-center justify-between gap-3">
           <p>Copyright &copy; {year} | Smart Deals All Rights Reserved</p>
           <span>
             Design & Developed by{" "}

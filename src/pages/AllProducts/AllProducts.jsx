@@ -45,20 +45,20 @@ const AllProducts = () => {
 
   return (
     <div className="container">
-      <div className="py-10">
+      <div className="py-10 pb-3 lg:pb-10">
         <div className="mb-5">
-          <h1 className="text-center font-bold text-5xl mb-5">
+          <h1 className="text-center font-bold text-3xl lg:text-5xl mb-5">
             Our All <span className="gradient-text">Products</span>
           </h1>
           <div>
             <div className="bg-white py-3 border-b border-gray-200 mb-5">
-              <div className="grid grid-cols-3 items-center">
-                <div className="flex h-10">
-                  <h5 className="font-medium h-full border border-gray-300/70 rounded-sm flex items-center px-3">
+              <div className="grid grid-cols-12 items-center gap-3">
+                <div className="flex h-10 col-span-12 md:col-span-6 lg:col-span-4">
+                  <h5 className="font-medium h-full border border-gray-300/70 rounded-sm flex items-center justify-center px-3 w-full lg:w-auto">
                     Total Products: {totalProduct}
                   </h5>
                 </div>
-                <div className="flex h-10 overflow-hidden">
+                <div className="flex h-10 overflow-hidden col-span-12 lg:col-span-4 order-3 lg:order-0">
                   <div className="h-full flex items-center justify-center cursor-pointer border border-teal-700 bg-teal-700 text-white hover:bg-teal-800 duration-150 px-2.5 order-2 rounded-sm rounded-tl-none rounded-bl-none">
                     <Search className="w-5 shrink-0" />
                   </div>
@@ -71,7 +71,7 @@ const AllProducts = () => {
                     placeholder="Search Products..."
                   />
                 </div>
-                <div className="flex h-10 overflow-hidden justify-end">
+                <div className="flex h-10 overflow-hidden justify-end col-span-12 md:col-span-6  lg:col-span-4">
                   <label htmlFor="category">
                     <div className="h-full rounded-sm rounded-tr-none rounded-br-none flex items-center justify-center bg-gray-200 px-2.5">
                       <ArrowUpDown className="w-5 shrink-0" />
@@ -80,7 +80,7 @@ const AllProducts = () => {
                   <select
                     onChange={handleSortChange}
                     name="category"
-                    className="outline-none rounded-sm rounded-tl-none rounded-bl-none px-1 border border-gray-300/70 "
+                    className="outline-none rounded-sm rounded-tl-none rounded-bl-none px-1 border border-gray-300/70 w-full lg:w-auto"
                     id="category"
                   >
                     <option disabled>Sort Products</option>
@@ -114,17 +114,19 @@ const AllProducts = () => {
                   <ArrowLeft className="w-5 shrink-0" />
                 </button>
               )}
-              {[...Array(totalPage).keys()].map((btn, index) => {
-                return (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentPage(index)}
-                    className={`w-10 h-10 bg-gray-200 hover:bg-gray-300 cursor-pointer duration-150 border border-gray-300 rounded-full flex items-center justify-center ${index === currentPage && "bg-teal-700 text-white border-teal-700 hover:bg-teal-700"}`}
-                  >
-                    {index + 1}
-                  </button>
-                );
-              })}
+              <div className="flex flex-wrap justify-center items-center max-w-60 sm:max-w-sm md:max-w-140 gap-2">
+                {[...Array(totalPage).keys()].map((btn, index) => {
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentPage(index)}
+                      className={`w-10 h-10 bg-gray-200 hover:bg-gray-300 cursor-pointer duration-150 border border-gray-300 rounded-full flex items-center justify-center ${index === currentPage && "bg-teal-700 text-white border-teal-700 hover:bg-teal-700"}`}
+                    >
+                      {index + 1}
+                    </button>
+                  );
+                })}
+              </div>
               {currentPage < totalPage - 1 && (
                 <button
                   onClick={() => setCurrentPage(currentPage + 1)}

@@ -89,7 +89,7 @@ const Modal = ({ closeModal, productID, refreshBids, minPrice, maxPrice }) => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-110 bg-white p-5 rounded-kl shadow-sm rounded-lg border border-gray-200 relative overflow-hidden animating"
+        className="max-w-sm sm:max-w-110 bg-white p-5 rounded-kl shadow-sm rounded-lg border border-gray-200 relative overflow-hidden animating"
       >
         <h1 className="font-bold text-2xl text-center mb-5 px-8">
           Give Seller Your Offered Price

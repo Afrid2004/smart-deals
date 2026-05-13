@@ -8,18 +8,18 @@ const Hero = () => {
       <div className="container py-15">
         <div className="flex flex-col items-center justify-center">
           <div className="mb-7">
-            <h1 className="font-bold text-7xl text-center mb-3 text-primary">
+            <h1 className="font-bold text-5xl md:text-6xl lg:text-7xl text-center mb-3 text-primary">
               Deal your <span className="gradient-text">Products</span> <br />{" "}
               in a <span className="gradient-text">Smart</span> way !
             </h1>
-            <p className="text-gray-600">
+            <p className="text-gray-600 text-center">
               SmartDeals helps you sell, resell, and shop from trusted local
               sellers — all in one place!
             </p>
           </div>
           <div className="mb-10">
             <form>
-              <div className="w-120 mb-7 h-12 flex items-center justify-between shadow-md rounded-4xl overflow-hidden bg-white">
+              <div className="w-sm md:w-120  mb-7 h-12 flex items-center justify-between shadow-md rounded-4xl overflow-hidden bg-white">
                 <div className="flex-1 h-full">
                   <input
                     type="text"

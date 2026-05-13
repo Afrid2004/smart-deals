@@ -58,3 +58,7 @@ input[type="password"]::-ms-clear {
     transform: scale(1);
   }
 }
+
+.mobilemenus a{
+  @apply bg-gray-200/70 border border-gray-200 p-2 rounded-sm
+}

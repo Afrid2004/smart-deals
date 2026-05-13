@@ -171,7 +171,7 @@ const CreateProduct = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-5">
-      <div className="w-full max-w-110 lg:max-w-220 bg-white p-5 rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+      <div className="w-full max-w-sm sm:max-w-110 md:max-w-170 lg:max-w-220 bg-white p-5 rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         <h1 className="font-bold text-4xl text-center mb-5 px-8">
           Create a <span className="gradient-text">Product</span>
         </h1>
@@ -182,7 +182,7 @@ const CreateProduct = () => {
         )}
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-12 gap-5">
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <div className="flex border border-gray-300/70 h-10 rounded-sm overflow-hidden mb-4">
                 <label htmlFor="title">
                   <div className="h-full flex items-center justify-center bg-gray-200 px-2.5">
@@ -217,7 +217,7 @@ const CreateProduct = () => {
               <div className="flex gap-3">
                 <label
                   for="brand_new"
-                  className="flex justify-between items-center gap-6 rounded-sm px-2.5 h-10 ring-1 ring-gray-300/70  hover:bg-gray-100 has-checked:text-gray-800 has-checked:ring-gray-600"
+                  className="flex justify-between items-center gap-6 rounded-sm px-2.5 h-10 ring-1 ring-gray-300/70  hover:bg-gray-100 has-checked:text-gray-800 has-checked:ring-gray-600 w-full"
                 >
                   Brand New
                   <input
@@ -231,7 +231,7 @@ const CreateProduct = () => {
                 </label>
                 <label
                   for="used"
-                  className="flex justify-between items-center gap-6 rounded-sm px-2.5 h-10 ring-1 ring-gray-300/70 hover:bg-gray-100 has-checked:text-gray-800 has-checked:ring-gray-600"
+                  className="flex justify-between items-center gap-6 rounded-sm px-2.5 h-10 ring-1 ring-gray-300/70 hover:bg-gray-100 has-checked:text-gray-800 has-checked:ring-gray-600 w-full"
                 >
                   Used
                   <input
@@ -244,7 +244,7 @@ const CreateProduct = () => {
                 </label>
               </div>
             </div>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <div className="flex border border-gray-300/70 h-10 rounded-sm overflow-hidden mb-4">
                 <label htmlFor="category">
                   <div className="h-full flex items-center justify-center bg-gray-200 px-2.5">
@@ -293,7 +293,7 @@ const CreateProduct = () => {
                 />
               </div>
             </div>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <div className="flex border border-gray-300/70 h-10 rounded-sm overflow-hidden">
                 <label htmlFor="product_image">
                   <div className="h-full flex items-center justify-center bg-gray-200 px-2.5">
@@ -310,7 +310,7 @@ const CreateProduct = () => {
                 />
               </div>
             </div>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <div className="flex border border-gray-300/70 h-10 rounded-sm overflow-hidden">
                 <label htmlFor="status">
                   <div className="h-full flex items-center justify-center bg-gray-200 px-2.5">
@@ -327,7 +327,7 @@ const CreateProduct = () => {
                 </select>
               </div>
             </div>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <div className="flex border border-gray-300/70 h-10 rounded-sm overflow-hidden">
                 <label htmlFor="location">
                   <div className="h-full flex items-center justify-center bg-gray-200 px-2.5">
@@ -344,7 +344,7 @@ const CreateProduct = () => {
                 />
               </div>
             </div>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <div className="flex border border-gray-300/70 h-10 rounded-sm overflow-hidden">
                 <label htmlFor="seller_phone">
                   <div className="h-full flex items-center justify-center bg-gray-200 px-2.5">
