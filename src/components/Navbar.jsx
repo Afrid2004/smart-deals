@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router";
 import Avatar from "./Avatar";
 import useAuth from "../Hooks/AuthContextHook";
@@ -56,7 +56,10 @@ const Navbar = () => {
               <div
                 className={`border shadow-sm min-w-70 border-gray-300/70 p-3 bg-white rounded-sm absolute top-[calc(100%+1rem)] right-0 ${subMenu ? "translate-y-0 duration-150 opacity-100 pointer-events-auto" : "translate-y-20 duration-150 opacity-0 pointer-events-none"} hidden md:block`}
               >
-                <div className="mobilemenus flex flex-col gap-3">
+                <div
+                  onClick={() => setSubMenu(false)}
+                  className="mobilemenus flex flex-col gap-3"
+                >
                   {profileMenu}
                   <div className="bg-gray-200/70 border border-gray-200 p-2 rounded-sm">
                     <p className="font-medium">{user?.displayName}</p>
