@@ -107,7 +107,7 @@ const AllProducts = () => {
               {loading ? (
                 <Loading />
               ) : products.length === 0 ? (
-                <p className="p-4 rounded-md bg-amber-300/30 text-amber-600 border border-amber-300/50 flex items-center gap-2">
+                <p className="p-4 col-span-12 rounded-md bg-amber-300/30 text-amber-600 border border-amber-300/50 flex items-center gap-2">
                   <CircleAlert className="w-5 shrink-0" />
                   No product found.
                 </p>

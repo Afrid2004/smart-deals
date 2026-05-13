@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import AxiosHook from "../../Hooks/AxiosHook";
-import Product from "../../components/Product";
 import Loading from "../../components/Loading";
 import {
   ArrowLeft,
@@ -11,9 +10,10 @@ import {
 } from "lucide-react";
 import { useSearchParams } from "react-router";
 import useAuth from "../../Hooks/AuthContextHook";
+import MyProductExtend from "../../components/MyProductExtend";
 
 const MyProduct = () => {
-  const { user } = useAuth();
+  const { user, loading: userLoading } = useAuth();
   const axiosInstance = AxiosHook();
   const [searchParams] = useSearchParams();
   const serachValue = searchParams.get("search"); //get serch value from hero section search input
@@ -28,10 +28,12 @@ const MyProduct = () => {
   const email = user?.email || "";
   const totalPage = Math.ceil(totalProduct / limit);
 
+  if (userLoading) {
+    return <Loading />;
+  }
+
   useEffect(() => {
-    if (!email) {
-      return <p>Failed to load data.</p>;
-    }
+    if (!email) return;
     setLoading(true);
     axiosInstance
       .get(
@@ -113,13 +115,18 @@ const MyProduct = () => {
               {loading ? (
                 <Loading />
               ) : products.length === 0 ? (
-                <p className="p-4 rounded-md bg-amber-300/30 text-amber-600 border border-amber-300/50 flex items-center gap-2">
+                <p className="p-4 col-span-12 rounded-md bg-amber-300/30 text-amber-600 border border-amber-300/50 flex items-center gap-2">
                   <CircleAlert className="w-5 shrink-0" />
                   No product found.
                 </p>
               ) : (
                 products.map((product) => (
-                  <Product key={product._id} product={product} />
+                  <MyProductExtend
+                    key={product._id}
+                    product={product}
+                    setProducts={setProducts}
+                    setTotalProduct={setTotalProduct}
+                  />
                 ))
               )}
             </div>
