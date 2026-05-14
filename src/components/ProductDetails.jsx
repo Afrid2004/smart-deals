@@ -5,13 +5,15 @@ import Modal from "./Modal";
 import Avatar from "./Avatar";
 import Loading from "./Loading";
 import useAuth from "../Hooks/AuthContextHook";
+import AxiosSecureHook from "../Hooks/AxiosSecureHook";
 
 const ProductDetails = () => {
   const product = useLoaderData();
+  const { user, loading } = useAuth();
   const [modal, setModal] = useState(false);
   const { _id: productID } = product; //renamed _id with productID
   const [bids, setBids] = useState([]);
-  const { loading } = useAuth();
+  const axiosSecureInstance = AxiosSecureHook();
 
   if (loading) {
     return <Loading />;
@@ -25,16 +27,18 @@ const ProductDetails = () => {
   };
 
   const fetchBids = () => {
-    fetch(
-      `https://smart-deals-backend-989k.onrender.com/products/bid/${productID}`,
-    )
-      .then((res) => res.json())
-      .then((data) => setBids(data));
+    axiosSecureInstance
+      .get(
+        `https://smart-deals-backend-989k.onrender.com/products/bid/${productID}`,
+      )
+      .then((res) => setBids(res.data))
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
+    if (product?.email !== user?.email) return;
     fetchBids();
-  }, [productID]);
+  }, [productID, product?.email, user?.email]);
 
   return (
     <div className="bg-gray-100">
@@ -155,107 +159,109 @@ const ProductDetails = () => {
           </div>
         </div>
 
-        <div>
-          <h1 className="font-bold text-3xl mb-5">
-            Bids for this product:{" "}
-            <span className="gradient-text">{bids.length}</span>
-          </h1>
-          {bids.length ? (
-            <div className="bg-white max-h-100 overflow-auto p-5 border border-gray-200 rounded-lg">
-              <table className="min-w-200 w-full">
-                <thead>
-                  <tr className="text-left">
-                    <th className="w-15 pb-3">SL No</th>
-                    <th className="w-62.5 pb-3">Product</th>
-                    <th className="w-62.5 pb-3">Buyer</th>
-                    <th className="w-30 pb-3">Bid Price</th>
-                    <th className="w-50 pb-3">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {bids.map((bid, index) => {
-                    const names = bid?.buyer_name || "User";
-                    const [first, last] = names.split(" ");
-                    const avatar = (first[0] || "") + (last ? last[0] : "");
+        {product?.email === user?.email && (
+          <div>
+            <h1 className="font-bold text-3xl mb-5">
+              Bids for this product:{" "}
+              <span className="gradient-text">{bids.length}</span>
+            </h1>
+            {bids.length ? (
+              <div className="bg-white max-h-100 overflow-auto p-5 border border-gray-200 rounded-lg">
+                <table className="min-w-200 w-full">
+                  <thead>
+                    <tr className="text-left">
+                      <th className="w-15 pb-3">SL No</th>
+                      <th className="w-62.5 pb-3">Product</th>
+                      <th className="w-62.5 pb-3">Buyer</th>
+                      <th className="w-30 pb-3">Bid Price</th>
+                      <th className="w-50 pb-3">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {bids.map((bid, index) => {
+                      const names = bid?.buyer_name || "User";
+                      const [first, last] = names.split(" ");
+                      const avatar = (first[0] || "") + (last ? last[0] : "");
 
-                    return (
-                      <tr key={index} className="border-t border-gray-300">
-                        <td className="py-5">{index + 1}</td>
+                      return (
+                        <tr key={index} className="border-t border-gray-300">
+                          <td className="py-5">{index + 1}</td>
 
-                        <td className="py-5">
-                          <div className="flex gap-2 items-center">
-                            <div className="w-20 h-12 shrink-0 overflow-hidden border border-gray-200">
-                              <img
-                                src={product?.image}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                            <div>
-                              <h2 className="font-semibold">
-                                {product?.title}
-                              </h2>
-                              <p className="text-gray-500 whitespace-nowrap">
-                                ${product?.price_min} - ${product?.price_max}
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-
-                        <td className="py-5">
-                          <div className="flex gap-2 items-center">
-                            {bid?.buyer_image ? (
-                              <img
-                                src={bid?.buyer_image}
-                                alt={bid?.buyer_name}
-                                className="w-10 h-10 rounded-full"
-                                title={bid?.buyer_name}
-                              />
-                            ) : (
-                              <div
-                                title={names}
-                                className="w-10 h-10 cursor-default gradient text-white flex items-center justify-center rounded-full"
-                              >
-                                {avatar}
+                          <td className="py-5">
+                            <div className="flex gap-2 items-center">
+                              <div className="w-20 h-12 shrink-0 overflow-hidden border border-gray-200">
+                                <img
+                                  src={product?.image}
+                                  className="w-full h-full object-cover"
+                                />
                               </div>
-                            )}
-                            <div>
-                              <h2 className="font-semibold">
-                                {bid.buyer_name}
-                              </h2>
-                              <p className="text-gray-500 whitespace-nowrap">
-                                {bid.buyer_email}
-                              </p>
+                              <div>
+                                <h2 className="font-semibold">
+                                  {product?.title}
+                                </h2>
+                                <p className="text-gray-500 whitespace-nowrap">
+                                  ${product?.price_min} - ${product?.price_max}
+                                </p>
+                              </div>
                             </div>
-                          </div>
-                        </td>
+                          </td>
 
-                        <td className="whitespace-nowrap py-5">
-                          ${bid.bid_price}
-                        </td>
+                          <td className="py-5">
+                            <div className="flex gap-2 items-center">
+                              {bid?.buyer_image ? (
+                                <img
+                                  src={bid?.buyer_image}
+                                  alt={bid?.buyer_name}
+                                  className="w-10 h-10 rounded-full"
+                                  title={bid?.buyer_name}
+                                />
+                              ) : (
+                                <div
+                                  title={names}
+                                  className="w-10 h-10 cursor-default gradient text-white flex items-center justify-center rounded-full"
+                                >
+                                  {avatar}
+                                </div>
+                              )}
+                              <div>
+                                <h2 className="font-semibold">
+                                  {bid.buyer_name}
+                                </h2>
+                                <p className="text-gray-500 whitespace-nowrap">
+                                  {bid.buyer_email}
+                                </p>
+                              </div>
+                            </div>
+                          </td>
 
-                        <td className="py-5">
-                          <div className="flex gap-2">
-                            <button className="px-4 py-1 border border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white duration-150 cursor-pointer">
-                              Accept
-                            </button>
-                            <button className="px-4 py-1 border border-red-600 text-red-600 hover:bg-red-600 hover:text-white duration-150 cursor-pointer">
-                              Reject
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <p className="p-4 rounded-md bg-amber-300/30 text-amber-600 border border-amber-300/50 flex items-center gap-2">
-              <CircleAlert className="w-5 shrink-0" />
-              No bids found for this product.
-            </p>
-          )}
-        </div>
+                          <td className="whitespace-nowrap py-5">
+                            ${bid.bid_price}
+                          </td>
+
+                          <td className="py-5">
+                            <div className="flex gap-2">
+                              <button className="px-4 py-1 border border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white duration-150 cursor-pointer">
+                                Accept
+                              </button>
+                              <button className="px-4 py-1 border border-red-600 text-red-600 hover:bg-red-600 hover:text-white duration-150 cursor-pointer">
+                                Reject
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <p className="p-4 rounded-md bg-amber-300/30 text-amber-600 border border-amber-300/50 flex items-center gap-2">
+                <CircleAlert className="w-5 shrink-0" />
+                No bids found for this product.
+              </p>
+            )}
+          </div>
+        )}
       </div>
       {modal && (
         <Modal
