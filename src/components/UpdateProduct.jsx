@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   CalendarDays,
   CircleDollarSign,
@@ -10,46 +11,46 @@ import {
   Phone,
   Type,
 } from "lucide-react";
-import React, { use, useState } from "react";
+import AxiosSecureHook from "../Hooks/AxiosSecureHook";
 import Swal from "sweetalert2";
-import useAuth from "../../Hooks/AuthContextHook";
-// import AxiosHook from "../../Hooks/AxiosHook";
-import { data } from "react-router";
-import AxiosSecureHook from "../../Hooks/AxiosSecureHook";
 
-const CreateProduct = () => {
-  const { user } = useAuth();
-  const name = user?.displayName || "User";
-  const [first, last] = name.split(" ");
-  const avatar = (first[0] || "") + (last ? last[0] : "");
-  const [err, setErr] = useState("");
+const spin = (
+  <div className="w-5 h-5 border-2 border-white border-t-white/30 border-r-white/30 rounded-full animate-spin"></div>
+);
+
+const UpdateProduct = ({ product, closeModal }) => {
   const [loading, setLoading] = useState(false);
-  // const axiosInstance = AxiosHook();
+  const [err, setErr] = useState("");
   const axiosSecureInstance = AxiosSecureHook();
-
-  const spin = (
-    <div className="w-5 h-5 border-2 border-white border-t-white/30 border-r-white/30 rounded-full animate-spin"></div>
-  );
-
+  const {
+    _id,
+    title,
+    price_min,
+    price_max,
+    category,
+    usage_time,
+    image,
+    location,
+    seller_contact,
+    description,
+    condition,
+    status,
+  } = product;
   const handleSubmit = (e) => {
     setErr("");
     e.preventDefault();
     const title = e.target.title.value.trim(),
       price_min = parseInt(e.target.min_price.value),
       price_max = parseInt(e.target.max_price.value),
-      email = user?.email || "N/A",
       category = e.target.category.value,
       status = e.target.status.value,
       usage_time = e.target.usage_time.value.trim(),
       image = e.target.product_image.value.trim(),
       location = e.target.location.value.trim(),
-      seller_image = user?.photoURL || "",
-      seller_name = name,
       seller_contact = e.target.seller_phone.value.trim(),
       description = e.target.description.value.trim(),
       conditionValue = e.target.productCondition;
     let condition;
-
     //regex value
     const imageUrlRegex = /^https:\/\//i;
 
@@ -88,92 +89,52 @@ const CreateProduct = () => {
       title,
       price_min,
       price_max,
-      email,
       category,
       usage_time,
       image,
       location,
-      seller_name,
       seller_contact,
-      seller_image,
       description,
       condition,
       status,
-      created_at: new Date().toISOString(),
     };
-
     setLoading(true);
     axiosSecureInstance
-      .post("/products", product)
+      .patch(`/products/${_id}`, product)
       .then((res) => {
-        if (res.data.insertedId) {
+        if (res.data.modifiedCount) {
           Swal.fire({
-            title: "Your Product has been placed.",
+            title: "Your Product has been updated.",
             icon: "success",
             timer: 1500,
           });
+          closeModal();
         } else {
-          setErr(res.data.message);
+          Swal.fire({
+            title: "All Data are same. Please update anything.",
+            icon: "error",
+          });
         }
       })
       .catch((err) => {
         Swal.fire({
-          title: "Failed to place your product.",
+          title: "Failed to update data.",
           icon: "error",
         });
       })
       .finally(() => setLoading(false));
-
-    // const bidDetails = {
-    //   product: productID,
-    //   buyer_name: name,
-    //   buyer_email: email,
-    //   buyer_image: user?.photoURL || "",
-    //   bid_price: parseFloat(price),
-    //   buyer_contact: phone,
-    //   status: "Pending",
-    // };
-    // setLoading(true);
-    // fetch("https://smart-deals-backend-989k.onrender.com/bids", {
-    //   method: "POST",
-    //   headers: {
-    //     "content-type": "application/json",
-    //   },
-    //   body: JSON.stringify(bidDetails),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     if (data.insertedId) {
-    //       setLoading(false);
-    //       refreshBids();
-    //       closeModal();
-    //       Swal.fire({
-    //         title: "Your bid has been placed.",
-    //         icon: "success",
-    //         timer: 3000,
-    //         timerProgressBar: true,
-    //       });
-    //     } else if (data.message) {
-    //       alert(data.message);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //     Swal.fire({
-    //       title: "Failed to place bid",
-    //       icon: "error",
-    //     });
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
   };
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 py-5">
-      <div className="w-full max-w-sm sm:max-w-110 md:max-w-170 lg:max-w-220 bg-white p-5 rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+    <div
+      onClick={closeModal}
+      className="w-full h-full fixed top-0 left-0 flex items-center justify-center backdrop-blur-2xl bg-white/30 py-5"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="w-full max-w-sm sm:max-w-110 md:max-w-170 lg:max-w-220 bg-white p-5 rounded-xl shadow-sm border border-gray-200 overflow-hidden animating"
+      >
         <h1 className="font-bold text-4xl text-center mb-5 px-8">
-          Create a <span className="gradient-text">Product</span>
+          Update <span className="gradient-text">Product</span>
         </h1>
         {err && (
           <span className=" text-red-500 mb-5 px-8 bg-red-200/70 h-10 flex items-center justify-center border border-red-200 rounded-md">
@@ -194,6 +155,7 @@ const CreateProduct = () => {
                   type="text"
                   name="title"
                   id="title"
+                  defaultValue={title}
                   placeholder="Product Title"
                   className="outline-none w-full px-2.5 h-full"
                 />
@@ -210,6 +172,7 @@ const CreateProduct = () => {
                   name="min_price"
                   id="min_price"
                   required
+                  defaultValue={price_min}
                   placeholder="Min Price"
                   className="outline-none w-full px-2.5 h-full"
                 />
@@ -226,7 +189,7 @@ const CreateProduct = () => {
                     type="radio"
                     value="Brand New"
                     name="productCondition"
-                    defaultChecked
+                    defaultChecked={condition === "Brand New"}
                   />
                 </label>
                 <label
@@ -240,6 +203,7 @@ const CreateProduct = () => {
                     type="radio"
                     value="used"
                     name="productCondition"
+                    defaultChecked={condition === "used"}
                   />
                 </label>
               </div>
@@ -255,6 +219,7 @@ const CreateProduct = () => {
                   name="category"
                   className="w-full outline-none px-1"
                   id="category"
+                  defaultValue={category}
                 >
                   <option value="Electronics">Electronics</option>
                   <option value="Vehicles">Vehicles</option>
@@ -274,6 +239,7 @@ const CreateProduct = () => {
                   id="max_price"
                   required
                   placeholder="Max Price"
+                  defaultValue={price_max}
                   className="outline-none w-full px-2.5 h-full"
                 />
               </div>
@@ -288,6 +254,7 @@ const CreateProduct = () => {
                   type="text"
                   name="usage_time"
                   id="usage_time"
+                  defaultValue={usage_time}
                   placeholder="Product Usage Time (e.g. 1 year 3 month)"
                   className="outline-none w-full px-2.5 h-full"
                 />
@@ -305,6 +272,7 @@ const CreateProduct = () => {
                   type="text"
                   name="product_image"
                   id="product_image"
+                  defaultValue={image}
                   placeholder="Product Image Url (e.g. https://...)"
                   className="outline-none w-full px-2.5 h-full"
                 />
@@ -321,6 +289,7 @@ const CreateProduct = () => {
                   name="status"
                   className="w-full outline-none px-1"
                   id="status"
+                  defaultValue={status}
                 >
                   <option value="Available">Available</option>
                   <option value="Pending">Pending</option>
@@ -339,6 +308,7 @@ const CreateProduct = () => {
                   type="text"
                   name="location"
                   id="location"
+                  defaultValue={location}
                   placeholder="City, Country"
                   className="outline-none w-full px-2.5 h-full"
                 />
@@ -357,6 +327,7 @@ const CreateProduct = () => {
                   name="seller_phone"
                   id="seller_phone"
                   required
+                  defaultValue={seller_contact}
                   placeholder="Seller Phone"
                   className="outline-none w-full px-2.5 h-full"
                 />
@@ -367,6 +338,7 @@ const CreateProduct = () => {
                 className="border outline-none border-gray-300/70 w-full rounded-sm overflow-hidden py-2 px-3 mb-3"
                 name="description"
                 id="description"
+                defaultValue={description}
                 placeholder="Product Description... "
                 required
               ></textarea>
@@ -376,7 +348,7 @@ const CreateProduct = () => {
             type="submit"
             className="gradient text-white font-medium px-4 py-2 rounded-lg w-full cursor-pointer flex items-center justify-center gap-2"
           >
-            Create a Product
+            Update Product
             {loading && spin}
           </button>
         </form>
@@ -385,4 +357,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default UpdateProduct;

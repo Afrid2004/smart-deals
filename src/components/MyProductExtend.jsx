@@ -3,9 +3,11 @@ import { Link } from "react-router";
 import AxiosHook from "../Hooks/AxiosHook";
 import Swal from "sweetalert2";
 import AxiosSecureHook from "../Hooks/AxiosSecureHook";
+import UpdateProduct from "./UpdateProduct";
 
 const MyProductExtend = ({ product, setProducts, setTotalProduct }) => {
   const axiosSecureInstance = AxiosSecureHook();
+  const [modal, setModal] = useState(false);
   const handleProductDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -37,6 +39,14 @@ const MyProductExtend = ({ product, setProducts, setTotalProduct }) => {
     });
   };
 
+  const handleProductUpdate = () => {
+    setModal(true);
+  };
+
+  const closeModal = () => {
+    setModal(false);
+  };
+
   return (
     <div className="bg-white p-3 rounded-lg border border-gray-200">
       <div className="aspect-4/3 mb-3 rounded-md overflow-hidden">
@@ -58,18 +68,27 @@ const MyProductExtend = ({ product, setProducts, setTotalProduct }) => {
         <div>
           <Link
             to={`/product/${product._id}`}
-            className="gradient text-white px-4 py-2 w-full block text-center rounded-md mb-3"
+            className="gradient text-white px-4 py-2 w-full block text-center rounded-md mb-2"
           >
-            View Details
+            View Product
           </Link>
-          <button
-            onClick={() => handleProductDelete(product._id)}
-            className="w-full py-2 duration-75 bg-gray-800 hover:bg-gray-900 text-white rounded-md cursor-pointer"
-          >
-            Delete Product
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => handleProductUpdate()}
+              className="w-full py-2 duration-75 bg-gray-800 hover:bg-gray-900 text-white rounded-md cursor-pointer"
+            >
+              Update Product
+            </button>
+            <button
+              onClick={() => handleProductDelete(product._id)}
+              className="w-full py-2 duration-75 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+            >
+              Delete Product
+            </button>
+          </div>
         </div>
       </div>
+      {modal && <UpdateProduct product={product} closeModal={closeModal} />}
     </div>
   );
 };
