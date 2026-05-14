@@ -111,7 +111,7 @@ const UpdateProduct = ({ product, closeModal }) => {
           closeModal();
         } else {
           Swal.fire({
-            title: "All Data are same. Please update anything.",
+            title: "All data are same!",
             icon: "error",
           });
         }
