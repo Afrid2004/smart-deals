@@ -10,6 +10,7 @@ import {
   MapPin,
   Phone,
   Type,
+  X,
 } from "lucide-react";
 import AxiosSecureHook from "../Hooks/AxiosSecureHook";
 import Swal from "sweetalert2";
@@ -132,7 +133,7 @@ const UpdateProduct = ({ product, closeModal, refreshProducts }) => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-sm sm:max-w-110 md:max-w-170 lg:max-w-220 bg-white p-5 rounded-xl shadow-sm border border-gray-200 overflow-hidden animating"
+        className="w-full max-w-sm sm:max-w-110 md:max-w-170 lg:max-w-220 bg-white p-5 rounded-xl shadow-sm border border-gray-200 overflow-hidden animating relative"
       >
         <h1 className="font-bold text-4xl text-center mb-5 px-8">
           Update <span className="gradient-text">Product</span>
@@ -352,6 +353,12 @@ const UpdateProduct = ({ product, closeModal, refreshProducts }) => {
             {loading && spin}
           </button>
         </form>
+        <div
+          onClick={closeModal}
+          className="absolute -right-0.5 -top-0.5 w-9 h-9 flex items-center justify-center rounded-md rounded-t-none rounded-br-none bg-gray-100 hover:bg-gray-200 duration-150 cursor-pointer border border-gray-300/50"
+        >
+          <X className="w-5 shrink-0" />
+        </div>
       </div>
     </div>
   );
