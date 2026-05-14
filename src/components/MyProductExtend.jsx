@@ -5,7 +5,12 @@ import Swal from "sweetalert2";
 import AxiosSecureHook from "../Hooks/AxiosSecureHook";
 import UpdateProduct from "./UpdateProduct";
 
-const MyProductExtend = ({ product, setProducts, setTotalProduct }) => {
+const MyProductExtend = ({
+  product,
+  setProducts,
+  setTotalProduct,
+  refreshProducts,
+}) => {
   const axiosSecureInstance = AxiosSecureHook();
   const [modal, setModal] = useState(false);
   const handleProductDelete = (id) => {
@@ -88,7 +93,13 @@ const MyProductExtend = ({ product, setProducts, setTotalProduct }) => {
           </div>
         </div>
       </div>
-      {modal && <UpdateProduct product={product} closeModal={closeModal} />}
+      {modal && (
+        <UpdateProduct
+          product={product}
+          refreshProducts={refreshProducts}
+          closeModal={closeModal}
+        />
+      )}
     </div>
   );
 };

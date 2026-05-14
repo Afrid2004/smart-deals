@@ -18,7 +18,7 @@ const spin = (
   <div className="w-5 h-5 border-2 border-white border-t-white/30 border-r-white/30 rounded-full animate-spin"></div>
 );
 
-const UpdateProduct = ({ product, closeModal }) => {
+const UpdateProduct = ({ product, closeModal, refreshProducts }) => {
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
   const axiosSecureInstance = AxiosSecureHook();
@@ -103,6 +103,7 @@ const UpdateProduct = ({ product, closeModal }) => {
       .patch(`/products/${_id}`, product)
       .then((res) => {
         if (res.data.modifiedCount) {
+          refreshProducts();
           Swal.fire({
             title: "Your Product has been updated.",
             icon: "success",
@@ -171,7 +172,6 @@ const UpdateProduct = ({ product, closeModal }) => {
                   type="number"
                   name="min_price"
                   id="min_price"
-                  required
                   defaultValue={price_min}
                   placeholder="Min Price"
                   className="outline-none w-full px-2.5 h-full"

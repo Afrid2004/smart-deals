@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Loading from "../../components/Loading";
 import {
   ArrowLeft,
@@ -32,8 +32,7 @@ const MyProduct = () => {
     return <Loading />;
   }
 
-  useEffect(() => {
-    if (!email) return;
+  const fetchMyProducts = useCallback(() => {
     setLoading(true);
     axiosSecureInstance
       .get(
@@ -46,6 +45,11 @@ const MyProduct = () => {
       .catch((err) => console.log(err.message))
       .finally(() => setLoading(false));
   }, [axiosSecureInstance, sort, search, order, currentPage, email]);
+
+  useEffect(() => {
+    if (!email) return;
+    fetchMyProducts();
+  }, [fetchMyProducts]);
 
   //handle sort changes
   const handleSortChange = (e) => {
@@ -126,6 +130,7 @@ const MyProduct = () => {
                     product={product}
                     setProducts={setProducts}
                     setTotalProduct={setTotalProduct}
+                    refreshProducts={fetchMyProducts}
                   />
                 ))
               )}
